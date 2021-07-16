@@ -1,15 +1,23 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import { FaAlignRight } from "react-icons/fa";
-import logo from "../images/logo.svg";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { FaAlignRight } from 'react-icons/fa';
+import logo from '../images/logo.svg';
+
 export default class Navbar extends Component {
-  state = {
-    isOpen: false
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      isOpen: false,
+    };
+  }
+
   handleToggle = () => {
-    this.setState({ isOpen: !this.state.isOpen });
+    const { isOpen } = this.state;
+    this.setState({ isOpen: !isOpen });
   };
+
   render() {
+    const { isOpen } = this.state;
     return (
       <nav className="navbar">
         <div className="nav-center">
@@ -26,7 +34,7 @@ export default class Navbar extends Component {
             </button>
           </div>
           <ul
-            className={this.state.isOpen ? "nav-links show-nav" : "nav-links"}
+            className={isOpen ? 'nav-links show-nav' : 'nav-links'}
           >
             <li>
               <Link to="/">Home</Link>

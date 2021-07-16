@@ -1,11 +1,9 @@
-import React from "react";
-import { useContext } from "react";
-import { RoomContext } from "../context";
-import Title from "./Title";
+import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
+import { RoomContext } from '../context';
+import Title from './Title';
 // get all unique values
-const getUnique = (items, value) => {
-  return [...new Set(items.map(item => item[value]))];
-};
+const getUnique = (items, value) => [...new Set(items.map((item) => item[value]))];
 
 const RoomsFilter = ({ rooms }) => {
   // react hooks
@@ -20,13 +18,13 @@ const RoomsFilter = ({ rooms }) => {
     minSize,
     maxSize,
     breakfast,
-    pets
+    pets,
   } = context;
 
   // get unique types
-  let types = getUnique(rooms, "type");
+  let types = getUnique(rooms, 'type');
   // add all
-  types = ["all", ...types];
+  types = ['all', ...types];
   // map to jsx
   types = types.map((item, index) => (
     <option key={index} value={item}>
@@ -34,7 +32,7 @@ const RoomsFilter = ({ rooms }) => {
     </option>
   ));
   // get unique capacity
-  let people = getUnique(rooms, "capacity");
+  let people = getUnique(rooms, 'capacity');
   people = people.map((item, index) => (
     <option key={index} value={item}>
       {item}
@@ -74,7 +72,10 @@ const RoomsFilter = ({ rooms }) => {
         {/* end of guests */}
         {/* room price */}
         <div className="form-group">
-          <label htmlFor="price">room price ${price}</label>
+          <label htmlFor="price">
+            room price $
+            {price}
+          </label>
           <input
             type="range"
             name="price"
@@ -86,7 +87,7 @@ const RoomsFilter = ({ rooms }) => {
             className="form-control"
           />
         </div>
-        {/* end of room price*/}
+        {/* end of room price */}
         {/* size */}
         <div className="form-group">
           <label htmlFor="price">room size </label>
@@ -134,6 +135,14 @@ const RoomsFilter = ({ rooms }) => {
       </form>
     </section>
   );
+};
+
+RoomsFilter.propTypes = {
+  rooms: PropTypes.array,
+};
+
+RoomsFilter.defaultProps = {
+  rooms: [],
 };
 
 export default RoomsFilter;

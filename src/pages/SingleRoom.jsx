@@ -1,28 +1,28 @@
-import React, { Component } from "react";
-import defaultBcg from "../images/room-1.jpeg";
-import Hero from "../components/Hero";
-import Banner from "../components/Banner";
-import { Link } from "react-router-dom";
-import { RoomContext } from "../context";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import defaultBcgImg from '../images/room-1.jpeg';
+import Banner from '../components/Banner';
+import { RoomContext } from '../context';
 
-import StyledHero from "../components/StyledHero";
-export default class SingleRoom extends Component {
-  constructor(props) {
-    super(props);
-    console.log(this.props);
-    this.state = {
-      slug: this.props.match.params.slug,
-      defaultBcg: defaultBcg
-    };
-  }
+import StyledHero from '../components/StyledHero';
+
+class SingleRoom extends Component {
   static contextType = RoomContext;
 
-  // componentDidMount() {
-  //   console.log(this.props);
-  // }
+  constructor(props) {
+    super(props);
+    const { match: { params: { slug } } } = this.props;
+    this.state = {
+      slug,
+      defaultBcg: defaultBcgImg,
+    };
+  }
+
   render() {
     const { getRoom } = this.context;
-    const room = getRoom(this.state.slug);
+    const { slug, defaultBcg } = this.state;
+    const room = getRoom(slug);
 
     if (!room) {
       return (
@@ -43,14 +43,13 @@ export default class SingleRoom extends Component {
       extras,
       breakfast,
       pets,
-      images
+      images,
     } = room;
     const [main, ...defaultImages] = images;
-    console.log(defaultImages);
 
     return (
       <>
-        <StyledHero img={images[0] || this.state.defaultBcg}>
+        <StyledHero img={images[0] || defaultBcg}>
           <Banner title={`${name} room`}>
             <Link to="/rooms" className="btn-primary">
               back to rooms
@@ -70,14 +69,22 @@ export default class SingleRoom extends Component {
             </article>
             <article className="info">
               <h3>info</h3>
-              <h6>price : ${price}</h6>
-              <h6>size : {size} SQFT</h6>
+              <h6>
+                price : $
+                {price}
+              </h6>
+              <h6>
+                size :
+                {size}
+                {' '}
+                SQFT
+              </h6>
               <h6>
                 max capacity :
                 {capacity > 1 ? `${capacity} people` : `${capacity} person`}
               </h6>
-              <h6>{pets ? "pets allowed" : "no pets allowed"}</h6>
-              <h6>{breakfast && "free breakfast included"}</h6>
+              <h6>{pets ? 'pets allowed' : 'no pets allowed'}</h6>
+              <h6>{breakfast && 'free breakfast included'}</h6>
             </article>
           </div>
         </section>
@@ -85,7 +92,10 @@ export default class SingleRoom extends Component {
           <h6>extras </h6>
           <ul className="extras">
             {extras.map((item, index) => (
-              <li key={index}>- {item}</li>
+              <li key={index}>
+                -
+                {item}
+              </li>
             ))}
           </ul>
         </section>
@@ -93,3 +103,14 @@ export default class SingleRoom extends Component {
     );
   }
 }
+
+SingleRoom.propTypes = {
+  match: PropTypes.object,
+
+};
+
+SingleRoom.defaultProps = {
+  match: {},
+};
+
+export default SingleRoom;

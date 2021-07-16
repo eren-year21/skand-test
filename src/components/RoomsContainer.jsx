@@ -1,8 +1,9 @@
-import React from "react";
-import { withRoomConsumer } from "../context";
-import Loading from "./Loading";
-import RoomsFilter from "./RoomsFilter";
-import RoomsList from "./RoomsList";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { withRoomConsumer } from '../context';
+import Loading from './Loading';
+import RoomsFilter from './RoomsFilter';
+import RoomsList from './RoomsList';
 
 function RoomContainer({ context }) {
   const { loading, sortedRooms, rooms } = context;
@@ -16,6 +17,18 @@ function RoomContainer({ context }) {
     </>
   );
 }
+
+RoomContainer.propTypes = {
+  context: PropTypes.shape({
+    loading: PropTypes.bool.isRequired,
+    sortedRooms: PropTypes.array.isRequired,
+    rooms: PropTypes.array.isRequired,
+  }),
+};
+
+RoomContainer.defaultProps = {
+  context: {},
+};
 
 export default withRoomConsumer(RoomContainer);
 

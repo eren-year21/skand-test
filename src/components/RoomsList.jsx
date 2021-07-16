@@ -1,5 +1,7 @@
-import React from "react";
-import Room from "./Room";
+import React from 'react';
+import PropTypes from 'prop-types';
+import Room from './Room';
+
 const RoomsList = ({ rooms }) => {
   if (rooms.length === 0) {
     return (
@@ -11,12 +13,18 @@ const RoomsList = ({ rooms }) => {
   return (
     <section className="roomslist">
       <div className="roomslist-center">
-        {rooms.map(item => {
-          return <Room key={item.id} room={item} />;
-        })}
+        {rooms.map((item) => <Room key={item.id} room={item} />)}
       </div>
     </section>
   );
+};
+
+RoomsList.propTypes = {
+  rooms: PropTypes.array,
+};
+
+RoomsList.defaultProps = {
+  rooms: [],
 };
 
 export default RoomsList;
